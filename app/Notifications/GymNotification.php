@@ -65,6 +65,6 @@ class GymNotification extends Notification
     public function toTwilio($notifiable)
     {
         return (new TwilioSmsMessage())
-            ->content("{$notifiable->guardian} {$this->message}");
+            ->content("{$notifiable->guardian} {$this->message->message}");
     }
 }

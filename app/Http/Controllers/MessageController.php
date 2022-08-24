@@ -30,7 +30,7 @@ class MessageController extends Controller
         $message = Message::create([
           'message' => $request->message
         ]);
-        return back();
+        return redirect('dashboard')->with('status', 'Message SENT!');
     }
 
     /**
