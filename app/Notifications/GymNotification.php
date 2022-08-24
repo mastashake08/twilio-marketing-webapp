@@ -6,19 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-
+use NotificationChannels\Twilio\TwilioChannel;
+use NotificationChannels\Twilio\TwilioSmsMessage;
+use App\Models\Message;
 class GymNotification extends Notification
 {
     use Queueable;
-
+    public $message;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Message $message)
     {
         //
+        $this->message = $message;
     }
 
     /**
@@ -29,7 +32,7 @@ class GymNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return [TwilioChannel::class];
     }
 
     /**
@@ -57,5 +60,11 @@ class GymNotification extends Notification
         return [
             //
         ];
+    }
+
+    public function toTwilio($notifiable)
+    {
+        return (new TwilioSmsMessage())
+            ->content("{$notifiable->guardian} {$this->message}");
     }
 }
