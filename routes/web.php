@@ -21,4 +21,5 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::post('/send-message', 'App\Http\Controllers\MessageController@store');
 require __DIR__.'/auth.php';

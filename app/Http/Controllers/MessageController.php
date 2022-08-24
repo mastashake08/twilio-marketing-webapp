@@ -27,6 +27,10 @@ class MessageController extends Controller
     public function store(StoreMessageRequest $request)
     {
         //
+        $message = Message::create([
+          'message' => $request->message
+        ]);
+        return back();
     }
 
     /**
@@ -62,4 +66,6 @@ class MessageController extends Controller
     {
         //
     }
+
+
 }

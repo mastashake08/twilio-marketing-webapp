@@ -9,12 +9,15 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+                  <form method="post" action="/send-message">
+                    @csrf
                     Send A Message
                     <x-label value="Message" for="message"/>
                     <x-input name="message" id="message"/>
                     <x-button>
                       Send
                     </x-button>
+                  </form>
                 </div>
             </div>
         </div>
