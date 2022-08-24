@@ -18,8 +18,14 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $contacts = \App\Models\Contact::paginate(15);
+    return view('dashboard')->with([
+      'contacts' => $contacts
+    ]);
 })->middleware(['auth'])->name('dashboard');
 
 Route::post('/send-message', 'App\Http\Controllers\MessageController@store');
+Route::post('/upload-contacts', 'App\Http\Controllers\ContactController@import');
+Route::post('/add-contact', 'App\Http\Controllers\ContactController@store');
+
 require __DIR__.'/auth.php';
