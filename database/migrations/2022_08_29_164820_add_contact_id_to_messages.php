@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('messages', function (Blueprint $table) {
-            $table->id();
-            $table->string('message');
-            $table->timestamps();
+        Schema::table('messages', function (Blueprint $table) {
+            //
+            $table->foreignId('contact_id')->constrained()->onDelete('cascade');
         });
     }
 
@@ -27,9 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-      DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-      Schema::dropIfExists('messages');
-      DB::statement('SET FOREIGN_KEY_CHECKS = 1');
-
+        Schema::table('messages', function (Blueprint $table) {
+            //
+            $table->dropForeign('contact_id_foreign');
+        });
     }
 };

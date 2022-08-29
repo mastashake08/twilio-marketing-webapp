@@ -27,5 +27,5 @@ Route::get('/dashboard', function () {
 Route::post('/send-message', 'App\Http\Controllers\MessageController@store');
 Route::post('/upload-contacts', 'App\Http\Controllers\ContactController@import');
 Route::post('/add-contact', 'App\Http\Controllers\ContactController@store');
-
+Route::get('/delete-contact/{contact}', 'App\Http\Controllers\ContactController@destroy');
 require __DIR__.'/auth.php';

@@ -27,9 +27,24 @@ class MessageController extends Controller
     public function store(StoreMessageRequest $request)
     {
         //
-        $message = Message::create([
-          'message' => $request->message
-        ]);
+        if($request->has('contact_id')) {
+          foreach($request->contact_id as $contact_id) {
+            $message = Message::create([
+              'message' => $request->message,
+              'contact_id' => $contact_id
+            ]);
+          }
+        } else {
+          $contacts = \App\Models\Contact::get(['id']);
+
+          $contacts->each(function($contact) use ($request) {
+
+            $message = Message::create([
+              'message' => $request->message,
+              'contact_id' => $contact->id
+            ]);
+          });
+        }
         return redirect('dashboard')->with('status', 'Message SENT!');
     }
 
@@ -65,6 +80,8 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         //
+        $message->delete();
+        return redirect('dashboard')->with('status', 'Message DELETED!');
     }
 
 

@@ -9,5 +9,8 @@ class Contact extends Model
     use HasFactory, Notifiable;
 
     public $guarded = [];
+    public function messages() {
+      return $this->hasMany(Message::class);
+    }
 
 }

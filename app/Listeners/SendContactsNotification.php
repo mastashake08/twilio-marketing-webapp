@@ -27,9 +27,8 @@ class SendContactsNotification
     public function handle(MessageCreated $event)
     {
         //
-        $contacts = \App\Models\Contact::all();
-        $contacts->each(function ($contact) use($event) {
-          $contact->notify(new \App\Notifications\GymNotification($event->message));
-        });
+
+        $event->message->contact->notify(new \App\Notifications\GymNotification($event->message));
+
     }
 }

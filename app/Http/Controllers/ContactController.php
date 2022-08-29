@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Imports\ContactImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Contact;
 class ContactController extends Controller
 {
     //
@@ -18,5 +19,10 @@ class ContactController extends Controller
     public function store(Request $request) {
       $contact = \App\Models\Contact::Create($request->all());
       return redirect('dashboard')->with('status', 'Contact CREATED!');
+    }
+
+    public function destroy (Contact $contact) {
+      $contact->delete();
+      return redirect('dashboard')->with('status', 'Contact DELETED!');
     }
 }

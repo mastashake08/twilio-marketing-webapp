@@ -14,11 +14,20 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                   <h3> <b> Contacts </b> </h3>
-                  <ul>
-                  @foreach ($contacts as $contact)
-                      <li> {{ $contact->first_name }} {{$contact->last_name}} </li>
-                  @endforeach
-                </ul>
+                  <table>
+                    <tr>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Actions</th>
+                    </tr>
+                    @foreach ($contacts as $contact)
+                    <tr>
+                      <td>{{ $contact->first_name }}</td>
+                      <td>{{$contact->last_name}}</td>
+                      <td><a href="{{url('/delete-contact/').'/'.$contact->id}}">Delete</a></td>
+                    </tr>
+                    @endforeach
+                  </table>
                 </div>
                 {{ $contacts->links() }}
             </div>
@@ -33,6 +42,16 @@
                     Send A Message
                     <x-label value="Message" for="message"/>
                     <x-input name="message" id="message"/>
+                    <x-label value="Select contacts or none to send to all" for="contact_id[]"/>
+                    <ul class="checkbox-grid">
+                      @foreach ($contacts as $contact)
+                      <li>
+                        <x-label value="{{ $contact->first_name }} {{$contact->last_name}}" for="{{$contact->id}}"/>
+                        <x-input name="contact_id[]" id="{{$contact->id}}" type="checkbox" value="{{$contact->id}}"/>
+                      </li>
+                      @endforeach
+                    </ul>
+
                     <x-button>
                       Send
                     </x-button>

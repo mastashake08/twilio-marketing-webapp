@@ -10,9 +10,13 @@ class Message extends Model
 {
     use HasFactory;
 
-    public $fillable = ['message'];
+    public $fillable = ['message', 'contact_id'];
 
     protected $dispatchesEvents = [
         'created' => MessageCreated::class
     ];
+
+    public function contact () {
+      return $this->belongsTo(Contact::class);
+    }
 }
